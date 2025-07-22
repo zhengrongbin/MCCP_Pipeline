@@ -1,8 +1,8 @@
-### A pipeline for MCCP data collection and processing 
-<p>MCCP stands for Metabolite-mediated Cell-cell Communication Portal. It integrates scRNA-seq atlas to map metabolite mediated cell-cell communications (mCCC) in different tissues, therefore, it facilitates new hypothesis generation and interesting discoveries for metabolite signaling using public scRNA-seq datasets.</p>
+# A pipeline for MCCP data collection and processing 
+MCCP stands for Metabolite-mediated Cell-cell Communication Portal. It integrates scRNA-seq atlas to map metabolite mediated cell-cell communications (mCCC) in different tissues, therefore, it facilitates new hypothesis generation and interesting discoveries for metabolite signaling using public scRNA-seq datasets. MCCP is available at http://rc-cbp.tch.harvard.edu/mccp.
 
 
-#### This pipline include stepwises instruction to collect and prepare dataset from the MCCP portal. The following sections were included:
+## This pipline include stepwises instruction to collect and prepare dataset from the MCCP portal. The following sections were included:
 
 - DISCO datasets: disco_pipeline.sh
 - CellxGene datasets: cellxgene_pipeline.sh
@@ -11,11 +11,12 @@
 - Perform differential mCCC between disease and normal datasets
 
 
-#### Installation for required packages and software
+## Installation for required packages and software
 - Python packages: scanpy, pandas, numpy, matplotlib, seaborn, scipy, base64, h5py, cellxgene_census (https://github.com/chanzuckerberg/cellxgene-census), mebocost (https://github.com/kaifuchenlab/MEBOCOST). 
 - Please install COMPASS refer to https://github.com/wagnerlab-berkeley/Compass.
 
-#### 1. DISCO datasets
+## Detailed instruction for each database
+### 1. DISCO datasets
 
 - First, we use batch download API provided by DISCO database to download meta data and packed gene expression data in h5ad files. Please check the download links at https://disco.bii.a-star.edu.sg/download.
 ```{bash}
@@ -54,7 +55,7 @@ done
 bash disco_pipeline.sh
 ```
 
-#### 2. CellxGene datasets
+### 2. CellxGene datasets
 
 - First, we download CellxGene dataset using cellxgene_census package provided by the database.
 ```{bash}
@@ -88,7 +89,7 @@ done
 ```
 
 
-#### 3. TISCH datasets
+### 3. TISCH datasets
 
 - First, copy the meta table of TISCH datasets at http://tisch.comp-genomics.org/gallery/, and save them into a TXT file named, such as, tisch2_selected_dataset_May28_2025.txt.
 ```{bash}
@@ -121,14 +122,14 @@ do
 done
 ```
 
-#### 4. Tidy up by integrating flux result and generating needed plots
+### 4. Tidy up by integrating flux result and generating needed plots
 <p>The following script will merge datasets from three repositories, and integate COMPASS flux to update mCCC results. The needed plots will be generated. All will be stored into mebo_res folder. It also produces a table containing all datasets, here, named as mccp_all_dataset_meta.tsv</p>
 
 ```{bash}
 python integrate_compass_flux_and_prepare_data_plots.py disco_dataset_for_mccp_update.txt cell_by_gene_selected_dataset_for_mccp_update.tsv tisch2_selected_dataset_May28_2025_for_mccp.txt
 ```
 
-#### 5. Differential analysis between disease and normal
+### 5. Differential analysis between disease and normal
 
 ```{bash}
 python differential_analysis.py mccp_all_dataset_meta.tsv
